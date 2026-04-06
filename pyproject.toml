@@ -9,8 +9,8 @@ build-backend = "setuptools.build_meta"
 
 [project]
 name = "inventree-partcategoryexport"
+version = "0.1.1"
 description = "A short description of the project"
-dynamic = ["version"]
 authors = [
     { name = "Roberto",email = "robertomo@fossa.systems" },
 ]
