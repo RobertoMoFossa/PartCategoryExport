@@ -1,62 +1,25 @@
-"""A short description of the project"""
-
 from plugin import InvenTreePlugin
-from collections import OrderedDict
-from typing import Any
-
-from django.db.models import QuerySet
 from plugin.mixins import DataExportMixin
-
 from part.models import PartCategory
 
-from . import PLUGIN_VERSION
 
+class PartCategoryPassThrough(DataExportMixin, InvenTreePlugin):
+    """
+    Pass-through exporter for Part Categories.
 
-class PartCategoryExport(DataExportMixin, InvenTreePlugin):
-    """PartCategoryExport - custom InvenTree plugin."""
+    IMPORTANT:
+    - Does NOT override update_headers
+    - Does NOT override export_data
+    - Uses the EXACT same export pipeline as the official InvenTree Exporter
+    """
 
-    # Plugin metadata
-    TITLE = "PartCategoryExport"
-    NAME = "PartCategoryExport"
-    SLUG = "partcategoryexport"
-    DESCRIPTION = "A short description of the project"
-    VERSION = PLUGIN_VERSION
+    TITLE = "PartCategory Pass-Through (Test)"
+    NAME = "PartCategoryPassThrough"
+    SLUG = "partcategory-passthrough"
+    DESCRIPTION = (
+        "Test exporter that returns exactly the same data as the official exporter"
+    )
+    VERSION = "1.0"
 
-    # Additional project information
-    AUTHOR = "Roberto"
-    WEBSITE = "https://my-project-url.com"
-    LICENSE = "MIT"
-
-    def supports_export(self, model_class, user, *args, **kwargs) -> bool:
+    def supports_export(self, model_class, user, *args, **kwargs):
         return issubclass(model_class, PartCategory)
-
-    def update_headers(
-        self, headers: OrderedDict, context: dict, **kwargs
-    ) -> OrderedDict:
-        # Solo asegurar que existen (sin romper nada)
-        headers.setdefault("name", "Name")
-        headers.setdefault("description", "Description")
-        headers.setdefault("pathstring", "Path")
-        headers.setdefault("partcount", "Parts")
-        return headers
-
-    def export_data(
-        self,
-        queryset: QuerySet,
-        serializer_class,
-        headers: OrderedDict,
-        context: dict,
-        output: Any,
-        **kwargs,
-    ) -> list[dict]:
-        data = []
-
-        for cat in queryset:
-            data.append({
-                "name": cat.name,
-                "description": cat.description or "",
-                "pathstring": cat.pathstring,
-                "partcount": getattr(cat, "partcount", 0),
-            })
-
-        return data
