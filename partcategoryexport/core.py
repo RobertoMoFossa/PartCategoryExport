@@ -19,7 +19,7 @@ class PartCategoryExport(DataExportMixin, InvenTreePlugin):
     DESCRIPTION = (
         "Test exporter that returns exactly the same data as the official exporter"
     )
-    VERSION = "0.1.1"
+    PLUGIN_VERSION = "0.1.1"
 
     def supports_export(self, model_class, user, *args, **kwargs):
         return issubclass(model_class, PartCategory)
