@@ -3,7 +3,7 @@ from plugin.mixins import DataExportMixin
 from part.models import PartCategory
 
 
-class PartCategoryPassThrough(DataExportMixin, InvenTreePlugin):
+class PartCategoryExport(DataExportMixin, InvenTreePlugin):
     """
     Pass-through exporter for Part Categories.
 
@@ -13,9 +13,9 @@ class PartCategoryPassThrough(DataExportMixin, InvenTreePlugin):
     - Uses the EXACT same export pipeline as the official InvenTree Exporter
     """
 
-    TITLE = "PartCategory Pass-Through (Test)"
-    NAME = "PartCategoryPassThrough"
-    SLUG = "partcategory-passthrough"
+    TITLE = "Part Category Export"
+    NAME = "PartCategoryExport"
+    SLUG = "part-category-export"
     DESCRIPTION = (
         "Test exporter that returns exactly the same data as the official exporter"
     )
